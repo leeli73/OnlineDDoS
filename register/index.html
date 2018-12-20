@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta name="robots" content="noindex, nofollow"/>
+    <meta name="googlebot" content="noindex, nofollow"/>
+    <title>注册-Online DDoS</title>
+
+    <script type="text/javascript" src="" ></script>
+    <link rel="stylesheet" type="text/css" href="main.css"/>
+
+</head>
+<body>
+<div class="mask"></div>
+<div class="container">
+    <div class="login-wrapper">
+        <svg id="peak" viewBox="0 0 1024 1024"><path fill="#FFF" d="M424 233.6L574.4 592c4.8 11.2 16 19.2 28.8 19.2h1.6c12.8 0 24-6.4 28.8-17.6l57.6-118.4 168 337.6H163.2l260.8-579.2m0-57.6c-6.4 0-11.2 3.2-14.4 9.6L113.6 846.4H912L704 433.6c-3.2-6.4-8-8-14.4-8-4.8 0-11.2 3.2-14.4 8l-73.6 147.2-163.2-395.2c-3.2-6.4-8-9.6-14.4-9.6z"></path></svg>
+        <div class="form-control">
+            <label>
+                <input type="text" class="textfield" id="email" maxlength="32"/>
+                <span class="emaillabel">邮箱地址</span>
+            </label>
+        </div>
+        <div class="form-control">
+            <label>
+                <input type="text" class="textfield" id="name" maxlength="32"/>
+                <span class="emaillabel">昵称</span>
+            </label>
+        </div>
+        <div class="form-control">
+            <label>
+                <input type="password" class="textfield" id="password" maxlength="32"/>
+                <span class="passwordlabel">密码</span>
+            </label>
+        </div>
+        <div class="form-control">
+            <label>
+                <input type="password" class="textfield" id="password2" maxlength="32"/>
+                <span class="passwordlabel">重复密码</span>
+            </label>
+        </div>
+        <br><br>
+        <!-- <button>Login</button> -->
+        <a class="button" href="../login/index.html">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            登录
+        </a>
+        <a href="#login" class="button" onclick="Register()">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            注册
+        </a>
+        <br><br><br><br><br>
+        
+    </div>
+</div>
+<script type="application/javascript" src="main.js"></script>
+<script type="text/javascript" src="md5.js"></script>
+<script>
+    function Register()
+	{
+        var email = document.getElementById("email").value;
+        var name = document.getElementById("name").value;
+		var password = document.getElementById("password").value;
+		var password2 = document.getElementById("password2").value;
+		
+        if(email==""||password==""||name==""||password2=="")
+        {
+            alert("请输入正确的注册信息！");
+            return;
+        }
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function () {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				var mes = trimStr(xmlhttp.responseText);
+				if(mes == "error")
+                {
+                    alert("邮箱已被注册!");
+                }
+                else if(mes == "success")
+                {
+                    alert("注册成功！");
+					window.location.href = "../login/index.html";
+                }
+				else
+				{
+					alert(mes);
+				}
+			}
+		}
+		var data = "email=" + email+"&password="+hex_md5(password)+"&name="+name;
+		xmlhttp.open("POST", "../lib/register.jsp", true);
+		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xmlhttp.send(data);
+	}
+    function trimStr(str) { 
+        return str.replace(/(^\s*)|(\s*$)/g, ""); 
+    }
+</script>
+</body>
+</html>
+
