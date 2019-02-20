@@ -8,9 +8,9 @@
 
 2.  ER图
 
-![](media/bb072fed5cfa6b95c02718a140618f58.png)
+![](images/bb072fed5cfa6b95c02718a140618f58.png)
 
-![](media/8a773e10ea4760d5972b65d4c6f00213.png)
+![](images/8a773e10ea4760d5972b65d4c6f00213.png)
 
 1.  **主要功能模块及接口定义**
 
@@ -130,23 +130,23 @@
 
 >   主页
 
-![](media/5a7d2fcf0a8f358db4123c68d55b3531.png)
+![](images/5a7d2fcf0a8f358db4123c68d55b3531.png)
 
 >   带菜单的主页
 
-![](media/44dd43579bf325a18e1831a898387cd0.png)
+![](images/44dd43579bf325a18e1831a898387cd0.png)
 
 >   登录
 
-![](media/58246de607d1b9529ccb161bca4aeffd.png)
+![](images/58246de607d1b9529ccb161bca4aeffd.png)
 
 >   注册
 
-![](media/fdf78bf47171204acbf6bb6adf7685a0.png)
+![](images/fdf78bf47171204acbf6bb6adf7685a0.png)
 
 1.  **功能测试**
 
-![](media/360d73999129eaf686bdeb77cdb82526.png)
+![](images/360d73999129eaf686bdeb77cdb82526.png)
 
 >   通过一个简易的易语言CGI程序，统计客户数和数据数。可基本看出功能运行正常。
 
@@ -156,22 +156,22 @@
 
 >   通过输入流获取结果，执行cmd命令实现。
 
-![](media/65c12f77752000de14bba0c12e713225.png)
+![](images/65c12f77752000de14bba0c12e713225.png)
 
 1.  POST操作
 
 >   通过调用java.net包中的函数实现
 
-![](media/141284467a06e890501a10af0d41b91c.png)
+![](images/141284467a06e890501a10af0d41b91c.png)
 
 1.  UDP连接
 
 >   通过调用java.net包中的函数实现
 
-![](media/0836f2578a681f517b019b700afeeddf.png)
+![](images/0836f2578a681f517b019b700afeeddf.png)
 
 1.  TCP连接
 
 >   通过调用java.net包中的函数实现
 
-![](media/f371f4bde6093203780505b6273f16ce.png)
+![](images/f371f4bde6093203780505b6273f16ce.png)
